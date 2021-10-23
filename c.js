@@ -1,4 +1,3 @@
-
 function help(wt){
 idt='id = id dari canvas';
   xit='xi = sumbu x (bisa dalam bentuk array 1D!>';
@@ -16,23 +15,23 @@ ct='c = color -value berbentuk array 1D !>';
 lbelt='lbel = label setiap line berbeda warna';
 
 if(wt=='scatter'){
-  scatt='function scatter(id, xi, yi , bgc, prad, legend)';
+  scatt='function scatter(id, xi, yi ,xl, yl, bgc, prad, legend)';
 console.log(scatt,'\n',idt,'\n',xit,'\n',yit,'\n',bgct,'\n',pradt,'\n',legendt)
 
 }else if(wt=='plot'){
-  plott='function plot(id, y, xtik, bg, br, legend, fill)';
+  plott='function plot(id, y, xtik, xl, yl, bg, br, legend, fill)';
   console.log(plott,'\n',idt,'\n',yt,'\n',xtt,'\n',bgct,'\n',brt,'\n',legendt);
 
   
 }else if(wt=='lines'){
-   linest='function lines(id, y, legend, c, lbel, xtik)';
+   linest='function lines(id, y, xl, yl, legend, c, lbel, xtik)';
    console.log(linest,'\n',idt,'\n',yt,'\n',legendt,'\n',ct,'\n',lbelt,'\n',xtt);
 }
   
   
 };
 
-function scatter(id, xi, yi , bgc, prad, legend){
+function scatter(id, xi, yi , xl, yl, bgc, prad, legend){
 if(typeof(xi[0])==='number'){
   if(typeof(bgc)==='boolean'){bgc='blue';}
   if(typeof(prad)==='undefined'){prad=3;}
@@ -58,7 +57,20 @@ new Chart(id, {
   },
   options: {
     legend: {display: legend},
-  }
+    scales: {
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: xl
+      }
+    }],
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: yl
+      }
+    }]
+  }}
 });
 }else if(typeof(xi[0])==='object'){
   if(typeof(bgc)==='boolean'){bgc='blue';}
@@ -95,13 +107,27 @@ new Chart(id, {
   },
   options: {
     legend: {display: legend},
+    scales: {
+      xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: xl
+      }
+    }],
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: yl
+      }
+    }]
+    }
   }
 });
 }
 
 }
 
-function plot(id, y, xtik, bg, br, legend, fill){
+function plot(id, y, xtik, xl, yl, bg, br, legend, fill){
 if(typeof(xtik)==='undefined'){xtik = [50,60,70,80,90,100,110,120,130,140,150];
 }
 if(typeof(bg)==='undefined'){bg='rgb(0,0,255)';}
@@ -124,12 +150,24 @@ new Chart(id, {
   options: {
     legend: {display: legend},
     scales: {
-      yAxes: [{ticks: {min: (y[0] - 10), max: (y[(y.length -1)] +10) }}],
-    }
-  }
-});}
+      yAxes: [{
+        ticks: {
+          min: (y[0] - 10), 
+          max: (y[(y.length -1)] +10)
+          },
+        scaleLabel: {
+          display: true,
+          labelString: yl
+        }}],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: xl
+        }
+      }]
+    }}})}
 
-function lines(id, y, legend, c, lbel, xtik){
+function lines(id, y, xl, yl, legend, c, lbel, xtik){
 if(typeof(xtik)==='undefined'){xtik=[100,200,300,400,500,600,700,800,900,1000]
 ;}
 if(typeof(label)==='undefined'){lbel=['a','b','c','d','e','f','g','h','i','j', 'k','l','m','n','o','p','q','r','s','t'];}
@@ -154,15 +192,32 @@ new Chart(id, {
     datasets: data
   },
   options: {
-    legend: {display: legend}
+    legend: {display: legend},
+    scales: {
+      yAxes: [{
+        ticks: {
+          min: (y[0] - 10), 
+          max: (y[(y.length -1)] +10)
+          },
+        scaleLabel: {
+          display: true,
+          labelString: yl
+        }}],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: xl
+        }
+      }]
+    }
   }
 });}
 
 
-let x = [[55],[50,60,70]];
-let y = [[6],[7,6.5,8]];
-let y1 = [7,8,8,9,9,9,10,11,14,14,15];
-let y3 = [
+//let x = [[55],[50,60,70]];
+//let y = [[6],[7,6.5,8]];
+//let y1 = [7,8,8,9,9,9,10,11,14,14,15];
+//let y3 = [
   [860,1140,1060,1060,1170,1110,1330,2210,7830,2478],
   [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
   [300,700,2000,-5000,6000,4000,2000,1000,200,100],
@@ -171,6 +226,6 @@ let y3 = [
 
 
 // scatter('myChart', x, y, legend=true)
-// plot('myChart2', y1)
+/plot('myChart2', y1)
 // lines('myChart3', y3)
 
